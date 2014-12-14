@@ -20,34 +20,35 @@ Install, Configure and Run (Linux)
 
 ###Get Sources###
 Get the sources from github to your local machine with git clone:
-`
+````
 git clone http://github.com/bourgeoislab/osc-webgate
-`
+```
 
 ###Compile###
 Compile OSC-webgate:
-`
+
+```
 cd OSC-webgate
 make
-`
+```
 
 ###Configure I###
 Edit file OSC-webgate.conf with a text editor.
 For a first test I recommend changing the settings to:
-`
+```
 root = "./www"
 port = 8080
-`
+```
  
 ###Test OSC-webgate###
 Run OSC-webgate:
-`
+```
 ./OSC-webgate
-`
+```
 Start a web browser on a machine in the same network and enter
-`
+```
 http://ip:8080/
-`
+```
 where ip is the IP address of the machine OSC-webgate is running on. You should see a simple page with some controls.
  
 ###Configure II###
@@ -67,35 +68,35 @@ A setup file setup_service.sh is added in the distribution. Running this script 
 - copy content of www to /var/www
  
 Note that the path of the configuration file is now:
-`
+```
 /etc/OSC-webgate/OSC-webgate.conf
-`
+```
 and the path of the www root folder
-`
+```
 /var/www
-`
+```
  
 At this point you may delete the OSC-webgate directory created with the git clone command.
 
 **Start OSC-webgate service:**
-`
+```
 systemctl start OSC-webgate
-`
+```
  
 **Stop OSC-webgate service:**
-`
+```
 systemctl stop OSC-webgate
-`
+```
  
 **Add OSC-webgate service to the start-up procedure:**
-`
+```
 systemctl enable OSC-webgate
-`
+```
  
 **Remove OSC-webgate service from start-up procedure:**
-`
+```
 systemctl disable OSC-webgate
-`
+```
  
 Communication Protocol
 ----------------------
