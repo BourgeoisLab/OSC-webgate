@@ -1,0 +1,11 @@
+[Unit]
+Description=OSC-webgate
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/OSC-webgate
+WorkingDirectory=/etc/OSC-webgate
+
+[Install]
+WantedBy=multi-user.target
