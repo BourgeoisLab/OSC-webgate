@@ -17,77 +17,48 @@
  *   along with OSC-webgate. If not, see <http://www.gnu.org/licenses/>.    *
  ****************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "datapool.h"
+/**
+ *  @file OSC-webgate-client-api.h
+ *  @brief API for client applications to communicate with OSC-webgate.
+ *
+ *  This application uses HTTPClient by Eitan Michaelson but you can use
+ *  any HTTP client you want.
+ * 
+ *  @author Frédéric Bourgeois
+ *  @version 1.0
+ *  @date 21 Dez 2014
+ */
 
-// example variables
-static int myIntVar = 0;
-static char myStrVar[DP_VALUE_LENGTH_MAX];
+#ifndef _OSC_WEBGATE_CLIENT_API_H_
+#define _OSC_WEBGATE_CLIENT_API_H_
 
 /**
+ * @brief Initializes the API.
  */
-void DPUSER_init(void)
-{
-    // add your initialization code here
-}
+void OSCC_init(void);
 
 /**
+ * @brief De-initializes the API.
  */
-void DPUSER_deinit(void)
-{
-    // add your de-initialization code here
-}
+void OSCC_deinit(void);
 
 /**
+ * @brief Gets the value of the corresponding variable from OSC-webgate.
+ * @param pHostAddress OSC-webgate address including port, e.g. localhost:8080
+ * @param pVariable Variable name
+ * @param pValue Value of the variable or empty string if not found
+ * @param valueMaxSize Maximal size of pValue (buffers size)
+ * @return 1 on success
  */
-void DPUSER_refresh(void)
-{
-    // add your refresh code here
-    static int counter = 0;
-    if (++counter % 100 == 0)
-        ++myIntVar;
-}
+int OSCC_getValue(const char *pHostAddress, const char *pVariable, char *pValue, unsigned int valueMaxSize);
 
 /**
+ * @brief Sets a new value of the corresponding variable from OSC-webgate.
+ * @param pHostAddress OSC-webgate address including port, e.g. localhost:8080
+ * @param pVariable Variable name
+ * @param pValue New value
+ * @return 1 on success
  */
-const char* DPUSER_getValue(const char *pVariable)
-{
-    static char pValue[DP_VALUE_LENGTH_MAX];
-	
-    *pValue = '\0';
-    
-    // skip variable prefix (app.user_prefix)
-    pVariable += strlen(app.user_prefix);
-	   
-    // add your code to get the value of a specific variable here
-    if (strcmp("myIntVar", pVariable) == 0)
-    {
-        sprintf(pValue, "%d", myIntVar);
-    }
-    else if (strcmp("myStrVar", pVariable) == 0)
-    {
-        strncpy(pValue, myStrVar, DP_VALUE_LENGTH_MAX);
-    }
+int OSCC_setValue(const char *pHostAddress, const char *pVariable, const char *pValue);
 
-    return pValue;
-}
-
-/**
- */
-void DPUSER_setValue(const char *pVariable, const char *pValue)
-{
-    // skip variable prefix (app.user_prefix)
-    pVariable += strlen(app.user_prefix);
-
-    // add your code to read the value of a specific variable here
-    if (strcmp("myIntVar", pVariable) == 0)
-    {
-        myIntVar = atoi(pValue);
-    }
-    else if (strcmp("myStrVar", pVariable) == 0)
-    {
-        strncpy(myStrVar, pValue, DP_VALUE_LENGTH_MAX);
-    }
-}
+#endif // _OSC_WEBGATE_CLIENT_API_H_

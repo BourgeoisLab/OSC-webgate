@@ -108,7 +108,7 @@ The communication between OSC-webgate and the clients (web-browser, smartphone o
  
 Extensions
 ----------
-Say you added some controls (potentiometers) and also a display to your Raspberry Pi and want to use them to control some parameters on the OSC host. There are mainly two  possibilities to achieve this.
+Say you added some controls (potentiometers) and also a display to your Raspberry Pi and want to use them to control some parameters on the OSC host. There are mainly two  possibilities to achieve this. An example can be found in the examples sub-directory (OSC-webgate-client).
  
 ###1. Web-Server Communication###
 Create a program that can send HTTP requests and use the CGI API described in the CGI module documentation. Using this API you can read and write variable values.

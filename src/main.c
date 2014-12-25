@@ -5,7 +5,7 @@
  *                                                                          *
  *   OSC-webgate is free software: you can redistribute it and/or           *
  *   modify it under the terms of the GNU General Public License as         *
- *   published bythe Free Software Foundation, either version 3 of the      *
+ *   published by the Free Software Foundation, either version 3 of the     *
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  *   OSC-webgate is distributed in the hope that it will be useful,         *
@@ -26,8 +26,8 @@
  * possibility to control these devices with a standard web-browser.
  *
  * Technically OSC-webgate is a web-server that forwards web requests to
- * an OSC host. Additionally it keeps track of the variables sent to the host.
- * In this way it can keep all his clients synchronized.
+ * an OSC host. Additionally it keeps track of the variables (= control values)
+ * sent to the host. In this way it can keep all his clients synchronized.
  *
  * OSC-webgate was designed to run on a Raspberry Pi Linux machine. But it
  * was successfully tested on a Windows machine.
@@ -35,7 +35,7 @@
  * @image html OSC-webgate.png
  *
  * @section License License
- * This software is free software and licensed under GPL version 3. 
+ * OSC-webgate is free software and licensed under GPL version 3. 
  *
  * @section install Install, Configure and Run (Linux)
  *
@@ -138,6 +138,7 @@
  * @subsection extensions1 1. Web-Server Communication
  * Create a program that can send HTTP requests and use the CGI API described in the CGI
  * module documentation. Using this API you can read and write variable values.
+ * An example can be found in the examples sub-directory (OSC-webgate-client).
  *
  * @subsection extensions2 2. Direct Integration
  * Extend the file datapooluser.c to your needs. The API there allows you to directly read and
