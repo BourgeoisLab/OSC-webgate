@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *
@@ -93,7 +93,7 @@ static PT_DataPoolEntry addEntry(const char *pVariable, const char *pValue)
     return NULL;
 }
 
-/** 
+/**
  * @brief Callback function when loading configuration file.
  * @param pParameter Parameter
  * @param pValue Value
@@ -139,18 +139,18 @@ int DP_init(const char *pFileName, int onTheFlyAllocation)
       #endif
     }
 
-    // initialize predefined data-pool
-    DPPREDEF_init();
-    
+    // initialize system data-pool
+    DPSYSTEM_init();
+
     // set on the fly allocation mode
     allocOnTheFly = onTheFlyAllocation;
 
     // set initialized flag
     initialized = 1;
-    
+
     // initialize user data-pool
     DPUSER_init();
-    
+
     return ret;
 }
 
@@ -160,18 +160,18 @@ void DP_deinit(void)
 {
     PT_DataPoolEntry pDel;
     PT_DataPoolEntry pData = pDataPool;
-    
+
     // check if initialized
     if (!initialized)
         return;
-        
+
     // de-initialize user data-pool
     DPUSER_deinit();
 
-    // de-initialize predefined data-pool
-    DPPREDEF_deinit();
+    // de-initialize system data-pool
+    DPSYSTEM_deinit();
 
-    // clear initialized flag  
+    // clear initialized flag
     initialized = 0;
 
     // free all allocated memory
@@ -189,13 +189,13 @@ void DP_deinit(void)
  */
 void DP_refresh(void)
 {
-    // refresh predefined data-pool
-    DPUSER_refresh();
+    // refresh system data-pool
+    DPSYSTEM_refresh();
 
     // refresh user data-pool
     DPUSER_refresh();
 }
- 
+
 /**
  */
 const char* DP_getValue(const char *pVariable)
@@ -206,36 +206,36 @@ const char* DP_getValue(const char *pVariable)
     // check if initialized
     if (!initialized)
         return pValue;
-    
-    if (strncmp(app.user_prefix, pVariable, strlen(app.user_prefix)) == 0)
+
+    // look for entry in system data-pool
+    pValue = DPSYSTEM_getValue(pVariable);
+    if (pValue)
+    {
+        // Do nothing
+    }
+    else if (strncmp(app.user_prefix, pVariable, strlen(app.user_prefix)) == 0)
     {
         // look for entry in user data-pool
         pValue = DPUSER_getValue(pVariable);
     }
     else
     {
-        // look for entry in predefined data-pool
-        pValue = DPPREDEF_getValue(pVariable);
-
-        if (!pValue)
+        // look for entry in data-pool
+        while (pData)
         {
-            // look for entry in data-pool
-            while (pData)
+            if (strcmp(pData->pVariable, pVariable) == 0)
             {
-                if (strcmp(pData->pVariable, pVariable) == 0)
-                {
-                    pValue = pData->pValue;
-                    break;
-                }
-                pData = pData->pNext;
-            }
-
-            // add new entry
-            if (allocOnTheFly && pData == NULL)
-            {
-                pData = addEntry(pVariable, "");
                 pValue = pData->pValue;
+                break;
             }
+            pData = pData->pNext;
+        }
+
+        // add new entry
+        if (allocOnTheFly && pData == NULL)
+        {
+            pData = addEntry(pVariable, "");
+            pValue = pData->pValue;
         }
     }
     return pValue;
@@ -251,35 +251,34 @@ void DP_setValue(const char *pVariable, const char *pValue)
     if (!initialized)
         return;
 
-    if (strncmp(app.user_prefix, pVariable, strlen(app.user_prefix)) == 0)
+    // look for entry in system data-pool
+    if (DPSYSTEM_setValue(pVariable, pValue))
+    {
+        // Do nothing
+    }
+    else if (strncmp(app.user_prefix, pVariable, strlen(app.user_prefix)) == 0)
     {
         // look for entry in user data-pool
         DPUSER_setValue(pVariable, pValue);
     }
     else
     {
-        // look for entry in predefined data-pool
-        int isPreDef = DPPREDEF_setValue(pVariable, pValue);
-
-        if (!isPreDef)
+        // look for entry in data-pool
+        while (pData)
         {
-            // look for entry in data-pool
-            while (pData)
+            if (strcmp(pData->pVariable, pVariable) == 0)
             {
-                if (strcmp(pData->pVariable, pVariable) == 0)
-                {
-                    // update value
-                    strncpy(pData->pValue, pValue, DP_VALUE_LENGTH_MAX - 1);
-                    break;
-                }
-                pData = pData->pNext;
+                // update value
+                strncpy(pData->pValue, pValue, DP_VALUE_LENGTH_MAX - 1);
+                break;
             }
+            pData = pData->pNext;
+        }
 
-            // add new entry
-            if (allocOnTheFly && pData == NULL)
-            {
-                pData = addEntry(pVariable, pValue);
-            }
+        // add new entry
+        if (allocOnTheFly && pData == NULL)
+        {
+            pData = addEntry(pVariable, pValue);
         }
     }
 
@@ -293,6 +292,4 @@ void DP_setValue(const char *pVariable, const char *pValue)
         OSC_sendMessages(app.osc_host, app.osc_port);
     }
   #endif
-
-    return;
 }

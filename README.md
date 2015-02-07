@@ -124,6 +124,9 @@ Credits
  
 Release Notes
 -------------
+**[v1.1.0]**
+- [fix] System (pre-defined) data-pool is now checked before user data-pool.
+ 
 **[v1.0.0]**
 - [new] Initial release.
  

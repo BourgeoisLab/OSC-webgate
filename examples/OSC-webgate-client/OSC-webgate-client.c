@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *
@@ -30,10 +30,11 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "OSC-webgate-client-api.h"
 
-// IP and port of OSC-webgate
-static const char *host = "localhost:80";
+// IP and port of OSC-webgate, e.g. localhost:80
+static char host[256];
 
 /**
  */
@@ -41,6 +42,14 @@ int main(int argc, char *argv[])
 {
     char value[256] = "";
 
+    // check arguments
+    if (argc != 2)
+    {
+        printf("usage: OSC-webgate-client.exe host[:port]\n");
+        return -1;
+    }
+    strncpy(host, argv[1], 256);
+    
     // initializes the API
     OSCC_init();
 
@@ -49,6 +58,10 @@ int main(int argc, char *argv[])
     printf("APP_VERSION: %s\n", OSCC_getValue(host, "APP_VERSION", value, 256) ? value : "---");
     printf("SERVER_IP: %s\n", OSCC_getValue(host, "SERVER_IP", value, 256) ? value : "---");
     printf("SERVER_PORT: %s\n", OSCC_getValue(host, "SERVER_PORT", value, 256) ? value : "---");
+    printf("USER_PREFIX: %s\n", OSCC_getValue(host, "USER_PREFIX", value, 256) ? value : "---");
+    printf("OSC_HOST: %s\n", OSCC_getValue(host, "OSC_HOST", value, 256) ? value : "---");
+    printf("OSC_PORT: %s\n", OSCC_getValue(host, "OSC_PORT", value, 256) ? value : "---");
+    printf("OSC_PREFIX: %s\n", OSCC_getValue(host, "OSC_PREFIX", value, 256) ? value : "---");
     printf("\n");
 
     // Read and write DPU.myIntVar

@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *
@@ -91,35 +91,39 @@ void DP_setValue(const char *pVariable, const char *pValue);
 
 
 /**
- * @defgroup DATAPOOL_PREDEF Predefined Data-pool
- * @brief Data-pool for predefined variables.
- * This data-pool defines some predefined variables.
+ * @defgroup DATAPOOL_SYSTEM System Data-pool
+ * @brief Data-pool for system variables.
+ * This data-pool defines some system variables.
  *
- * <b>Predefined Variables:</b>
- * - APP_NAME: application name
- * - APP_VERSION: application version
- * - SERVER_IP: IP address of the server
- * - SERVER_PORT: port number of the server
+ * <b>System Variables:</b>
+ * - APP_NAME: application name (read-only)
+ * - APP_VERSION: application version (read-only)
+ * - SERVER_IP: IP address of the server (read-only)
+ * - SERVER_PORT: port number of the server (read-only)
+ * - USER_PREFIX: prefix of user variables (read-only)
+ * - OSC_HOST: host name of OSC host (read-only)
+ * - OSC_PORT: port of OSC host (read-only)
+ * - OSC_PREFIX: prefix of variables routed to the OSC host (read-only)
  * @{
  */
  
 /**
- * @brief Initialize the predefined data-pool module.
+ * @brief Initialize the system data-pool module.
  * @note Called by DP_init().
  */
-void DPPREDEF_init(void);
+void DPSYSTEM_init(void);
 
 /**
- * @brief De-initialize the predefined data-pool module.
+ * @brief De-initialize the system data-pool module.
  * @note Called by DP_deinit().
  */
-void DPPREDEF_deinit(void);
+void DPSYSTEM_deinit(void);
 
 /**
  * @brief Called periodically with an undefined period (about 100ms).
  * @note Called by DP_refresh().
  */
-void DPPREDEF_refresh(void);
+void DPSYSTEM_refresh(void);
 
 /**
  * @brief Get the value of the corresponding variable.
@@ -127,18 +131,18 @@ void DPPREDEF_refresh(void);
  * @param pVariable Variable name
  * @return Value of the variable or NULL if not found
  */
-const char* DPPREDEF_getValue(const char *pVariable);
+const char* DPSYSTEM_getValue(const char *pVariable);
 
 /**
  * @brief Set a new value of the corresponding variable.
  * @note Call the generic function DP_setValue() instead.
  * @param pVariable Variable name
  * @param pValue New value
- * @return 1 if variable is a predefined variable
+ * @return 1 if variable is a system variable
  */
-int DPPREDEF_setValue(const char *pVariable, const char *pValue);
+int DPSYSTEM_setValue(const char *pVariable, const char *pValue);
 
-/** @} DATAPOOL_PREDEF */
+/** @} DATAPOOL_SYSTEM */
 
 
 /**

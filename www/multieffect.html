@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OSC-webgate</title>
+<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no">
+<script src="jquery-1.11.1.min.js"></script>
+<script src="osc-webgate.js"></script>
+<script>
+// OSCWG_tag(id, variable)
+// id is a unique id for an HTML element
+// variable is the variable linked to this HTML element
+var TAGS = [           
+            new OSCWG_tag("id_master_switch", "/osc/master/switch"),
+            new OSCWG_tag("id_master_volume", "/osc/master/volume"),
+            new OSCWG_tag("id_fuzz_switch", "/osc/fuzz/switch"),
+            new OSCWG_tag("id_fuzz_drive", "/osc/fuzz/drive"),
+            new OSCWG_tag("id_fuzz_clip", "/osc/fuzz/clip"),
+            new OSCWG_tag("id_tremolo_switch", "/osc/tremolo/switch"),
+            new OSCWG_tag("id_tremolo_rate", "/osc/tremolo/rate"),
+            new OSCWG_tag("id_tremolo_shape", "/osc/tremolo/shape"),
+            new OSCWG_tag("id_tremolo_depth", "/osc/tremolo/depth"),
+            new OSCWG_tag("id_phaser_switch", "/osc/phaser/switch"),
+            new OSCWG_tag("id_phaser_speed", "/osc/phaser/speed"),
+            new OSCWG_tag("id_phaser_depth", "/osc/phaser/depth"),
+            new OSCWG_tag("id_phaser_feedback", "/osc/phaser/feedback"),
+            new OSCWG_tag("id_delay_switch", "/osc/delay/switch"),
+            new OSCWG_tag("id_delay_delay", "/osc/delay/delay"),
+            new OSCWG_tag("id_delay_feedback", "/osc/delay/feedback")
+           ];
+</script>
+</head>
+<!-- Start communication with a polling time of 500 ms -->
+<body onload="OSCWG_init(TAGS, 500)">
+<h1>BourgeoisLab Multi-effect</h1>
+<h2>MASTER</h2>
+<table>
+  <tr><td>ON/OFF:</td><td><input type="checkbox" id="id_master_switch"></td></tr>
+  <tr><td>Volume:</td><td><input type="range" id="id_master_volume" min="0" max="100"></td></tr>
+</table>
+<h2>Fuzz</h2>
+<table>
+  <tr><td>ON/OFF:</td><td><input type="checkbox" id="id_fuzz_switch"></td></tr>
+  <tr><td>Drive:</td><td><input type="range" id="id_fuzz_drive" min="0" max="100"></td></tr>
+  <tr><td>Clip:</td><td><input type="range" id="id_fuzz_clip" min="0.1" max="1.0" step="0.01"></td></tr>
+</table>
+<h2>Tremolo</h2>
+<table>
+  <tr><td>ON/OFF:</td><td><input type="checkbox" id="id_tremolo_switch"></td></tr>
+  <tr><td>Rate:</td><td><input type="range" id="id_tremolo_rate" min="0.5" max="5.0" step="0.1"></td></tr>
+  <tr><td>Shape:</td><td><input type="range" id="id_tremolo_shape" min="1" max="20"></td></tr>
+  <tr><td>Depth:</td><td><input type="range" id="id_tremolo_depth" min="0.0" max="0.5"  step="0.01"></td></tr>
+</table>
+<h2>Phaser</h2>
+<table>
+  <tr><td>ON/OFF:</td><td><input type="checkbox" id="id_phaser_switch"></td></tr>
+  <tr><td>Speed:</td><td><input type="range" id="id_phaser_speed" min="0" max="10" step="0.1"></td></tr>
+  <tr><td>Depth:</td><td><input type="range" id="id_phaser_depth" min="0" max="10" step="0.1"></td></tr>
+  <tr><td>Feedback:</td><td><input type="range" id="id_phaser_feedback" min="-1.0" max="1.0" step="0.01"></td></tr>
+</table>
+<h2>Delay</h2>
+<table>
+  <tr><td>ON/OFF:</td><td><input type="checkbox" id="id_delay_switch"></td></tr>
+  <tr><td>Delay:</td><td><input type="range" id="id_delay_delay" min="0" max="5000" step="10"></td></tr>
+  <tr><td>Feedback:</td><td><input type="range" id="id_delay_feedback" min="0.0" max="1.0" step="0.01"></td></tr>
+</table>
+</body>
+</html>

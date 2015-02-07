@@ -10,6 +10,16 @@
 // id is a unique id for an HTML element
 // variable is the variable linked to this HTML element
 var TAGS = [
+            new OSCWG_tag("APP_NAME", "APP_NAME"),
+            new OSCWG_tag("APP_VERSION", "APP_VERSION"),
+            new OSCWG_tag("SERVER_IP", "SERVER_IP"),
+            new OSCWG_tag("SERVER_PORT", "SERVER_PORT"),
+            new OSCWG_tag("USER_PREFIX", "USER_PREFIX"),
+            new OSCWG_tag("OSC_HOST", "OSC_HOST"),
+            new OSCWG_tag("OSC_PORT", "OSC_PORT"),
+            new OSCWG_tag("OSC_PREFIX", "OSC_PREFIX"),
+            
+            new OSCWG_tag("OSC_PREFIX_VAL", "OSC_PREFIX"),
             new OSCWG_tag("id_switch", "/osc/master/switch"),
             new OSCWG_tag("id_switch_value", "/osc/master/switch"),
             new OSCWG_tag("id_volume", "/osc/master/volume"),
@@ -17,10 +27,10 @@ var TAGS = [
             new OSCWG_tag("id_pitch", "/osc/osc/pitch"),
             new OSCWG_tag("id_pitch_value", "/osc/osc/pitch"),
             
-            new OSCWG_tag("APP_NAME", "APP_NAME"),
-            new OSCWG_tag("APP_VERSION", "APP_VERSION"),
-            new OSCWG_tag("SERVER_IP", "SERVER_IP"),
-            new OSCWG_tag("SERVER_PORT", "SERVER_PORT")
+            new OSCWG_tag("USER_PREFIX_VAL", "USER_PREFIX"),
+            new OSCWG_tag("myIntVar", "DPU.myIntVar"),
+            new OSCWG_tag("myStrVar", "DPU.myStrVar")
+            
            ];
 </script>
 </head>
@@ -28,16 +38,28 @@ var TAGS = [
 <body onload="OSCWG_init(TAGS, 500)">
 <h1>OSC-webgate</h1>
 <p>This is an example for the OSC-webgate.</p>
+
+<h2>OSC Variables</h2>
+<p><b>OSC prefix: </b> <span id="OSC_PREFIX_VAL"></span></p>
 ON/OFF: <input type="checkbox" id="id_switch"> <span id="id_switch_value"></span></br>
 Volume: <input type="range" id="id_volume" min="0" max="100"> <input type="text" id="id_volume_edit"></br>
 Pitch: <input type="range" id="id_pitch" min="0" max="4000"> <span id="id_pitch_value"></span>Hz</br>
 
-<h2>Predefined Variables</h2>
+<h2>User Variables</h2>
+<p><b>User prefix: </b> <span id="USER_PREFIX_VAL"></span></p>
+myIntVar: <input type="text" id="myIntVar"></br>
+myStrVar: <input type="text" id="myStrVar"></br>
+
+<h2>System Variables</h2>
 <table>
   <tr><td>APP_NAME</td><td id="APP_NAME"></td></tr>
   <tr><td>APP_VERSION</td><td id="APP_VERSION"></td></tr>
   <tr><td>SERVER_IP</td><td id="SERVER_IP"></td></tr>
   <tr><td>SERVER_PORT</td><td id="SERVER_PORT"></td></tr>
+  <tr><td>USER_PREFIX</td><td id="USER_PREFIX"></td></tr>
+  <tr><td>OSC_HOST</td><td id="OSC_HOST"></td></tr>
+  <tr><td>OSC_PORT</td><td id="OSC_PORT"></td></tr>
+  <tr><td>OSC_PREFIX</td><td id="OSC_PREFIX"></td></tr>
 </table>
 
 </body>

@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *

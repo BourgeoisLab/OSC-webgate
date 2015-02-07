@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *
@@ -31,6 +31,8 @@ static char myStrVar[DP_VALUE_LENGTH_MAX];
 void DPUSER_init(void)
 {
     // add your initialization code here
+    myIntVar = 0;
+    strncpy(myStrVar, "String variable", DP_VALUE_LENGTH_MAX);
 }
 
 /**
@@ -46,7 +48,7 @@ void DPUSER_refresh(void)
 {
     // add your refresh code here
     static int counter = 0;
-    if (++counter % 100 == 0)
+    if (++counter % 10 == 0)
         ++myIntVar;
 }
 

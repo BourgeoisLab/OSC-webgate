@@ -17,7 +17,7 @@ LDFLAGS=
 
 OBJ=$(SRC)main.o \
 $(SRC)datapool.o \
-$(SRC)datapoolpredef.o \
+$(SRC)datapoolsystem.o \
 $(SRC)datapooluser.o \
 $(SRC)cgi.o \
 $(SRC)cgi_json.o \

@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *
@@ -22,12 +22,12 @@
 #include <string.h>
 #include "datapool.h"
 
-#ifdef LINUX
+#if defined(LINUX)
   #include <unistd.h>
   #include <sys/ioctl.h>
   #include <net/if.h>
   #include <arpa/inet.h>
-#else
+#elif defined(WIN32)
   #include <WinSock2.h>
 #endif
 
@@ -35,27 +35,32 @@
 
 static const char* getServerIpAddress(void);
 static const char* getServerPort(void);
+static const char* getOSCPort(void);
 
 /****************************************************************************/
 
 typedef const char*  (*getValueFnc)(void);
 typedef void (*setValueFnc)(const char*);
 
-/** Structure for a predefined data */
-typedef struct t_PredefData
+/** Structure for a system data */
+typedef struct SystemData_t
 {
-    const char*    pVariable;           /**< Name of predefined data variable */
+    const char*    pVariable;           /**< Name of system variable */
     const char*    pConstValue;         /**< Value if constant, else NULL */
-    getValueFnc    getValue;            /**< Function pointer to get value */
-    setValueFnc    setValue;            /**< Function pointer to set value */
-}T_PredefData, *PT_PredefData;
+    getValueFnc    getValue;            /**< Function pointer to get a value */
+    setValueFnc    setValue;            /**< Function pointer to set a value */
+}SystemData_type;
 
-static T_PredefData predefData[] =
+static const SystemData_type systemData[] =
 {
     { "APP_NAME", APP_NAME, NULL, NULL },
     { "APP_VERSION", APP_VERSION, NULL, NULL },
     { "SERVER_IP", NULL, getServerIpAddress, NULL },
     { "SERVER_PORT", NULL, getServerPort, NULL },
+    { "USER_PREFIX", app.user_prefix, NULL, NULL },
+    { "OSC_HOST", app.osc_host, NULL, NULL },
+    { "OSC_PORT", NULL, getOSCPort, NULL },
+    { "OSC_PREFIX", app.osc_prefix, NULL, NULL },
     { NULL, NULL, NULL, NULL }
 };
 
@@ -63,30 +68,30 @@ static T_PredefData predefData[] =
 
 /**
  */
-void DPPREDEF_init(void)
+void DPSYSTEM_init(void)
 {
     // nothing to do
 }
 
 /**
  */
-void DPPREDEF_deinit(void)
+void DPSYSTEM_deinit(void)
 {
     // nothing to do
 }
 
 /**
  */
-void DPPREDEF_refresh(void)
+void DPSYSTEM_refresh(void)
 {
     // nothing to do
 }
 
 /**
  */
-const char* DPPREDEF_getValue(const char *pVariable)
+const char* DPSYSTEM_getValue(const char *pVariable)
 {
-    PT_PredefData ptr = predefData;
+    const SystemData_type *ptr = systemData;
     while (ptr->pVariable)
     {
         if (strcmp(ptr->pVariable, pVariable) == 0)
@@ -103,9 +108,9 @@ const char* DPPREDEF_getValue(const char *pVariable)
 
 /**
  */
-int DPPREDEF_setValue(const char *pVariable, const char *pValue)
+int DPSYSTEM_setValue(const char *pVariable, const char *pValue)
 {
-    PT_PredefData ptr = predefData;
+    const SystemData_type *ptr = systemData;
     while (ptr->pVariable)
     {
         if (strcmp(ptr->pVariable, pVariable) == 0)
@@ -125,7 +130,7 @@ int DPPREDEF_setValue(const char *pVariable, const char *pValue)
  */
 static const char* getServerIpAddress(void)
 {
-  #ifdef LINUX
+  #if defined(LINUX)
     const char *ret = "";
     int fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd != -1)
@@ -138,7 +143,7 @@ static const char* getServerIpAddress(void)
         close(fd);
     }
     return ret;
-  #else
+  #elif defined(WIN32)
     char name[256];
     PHOSTENT hostinfo;
     if (gethostname(name, sizeof(name)) == 0)
@@ -158,5 +163,14 @@ static const char* getServerPort(void)
 {
     static char port[8];
     sprintf(port, "%d", app.port);
+    return port;
+}
+
+/**
+ */
+static const char* getOSCPort(void)
+{
+    static char port[8];
+    sprintf(port, "%d", app.osc_port);
     return port;
 }

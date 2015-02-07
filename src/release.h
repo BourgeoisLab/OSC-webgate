@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *
@@ -47,7 +47,7 @@
 #define APP_NAME                            "OSC-webgate"
 
 /** Application version */
-#define APP_VERSION                         "1.0.0"
+#define APP_VERSION                         "1.1.0"
 
 /** Application file name*/
 #define APP_FILENAME                        "OSC-webgate"

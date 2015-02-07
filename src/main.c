@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2014 Frédéric Bourgeois <bourgeoislab@gmail.com>         *
+ *   Copyright (c) 2014 - 2015 Frédéric Bourgeois <bourgeoislab@gmail.com>  *
  *                                                                          *
  *   This file is part of OSC-webgate.                                      *
  *                                                                          *
@@ -150,6 +150,9 @@
  * - <b> jQuery:</b> http://jquery.com/
  *
  * @section ReleaseNotes Release Notes
+ * <b>[v1.1.0]</b>
+ * - [fix] System (pre-defined) data-pool is now checked before user data-pool.
+ *
  * <b>[v1.0.0]</b>
  * - [new] Initial release.
  *
